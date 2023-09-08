@@ -8,7 +8,6 @@ import com.example.airbnb.module.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,14 +25,19 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @PostMapping("/join")
     public ResponseEntity<User> join(@Valid @RequestBody UserJoinRequest request, BindingResult result) {
+
+        System.out.println("test : " + request);
 
         if (result.hasErrors()) {
             throw new Exception400(result.getAllErrors().get(0).getDefaultMessage());
         }
 
         User user = userService.userJoin(request);
+
+        System.out.println("test 2 : " + user);
 
         return ResponseEntity.ok().body(user);
     }
